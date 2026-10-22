@@ -1,14 +1,25 @@
 import { mainStyles } from '@/style'
-import { Link } from 'expo-router'
-import { Text, View } from 'react-native'
+import { Button, Text, View } from 'react-native'
+import { useAudioPlayer } from 'expo-audio'
+
+import StartAudio from '@/assets/audio/start_noise.wav'
 
 const Main = () => {
+  const player = useAudioPlayer(StartAudio)
+
+  const handlePlay = async () => {
+    try {
+      await player.seekTo(0)
+      await player.play()
+    } catch (err) {
+      console.error(err)
+    }
+  }
   return (
     <View style={mainStyles}>
-      <Text>Opening page</Text>
-      <Link href='/(app)/home'>
-        <Text>Go Home</Text>
-      </Link>
+      <Text>Main</Text>
+
+      <Button title='play' onPress={handlePlay} />
     </View>
   )
 }
